@@ -85,4 +85,9 @@ public class ClockDisplay
         displayString = hours.getDisplayValue() + ":" + 
                         minutes.getDisplayValue();
     }
+    
+    public void get12HourInternalDisplay()
+    {
+        
+    }
 }
