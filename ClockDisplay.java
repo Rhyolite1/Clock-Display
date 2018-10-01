@@ -21,6 +21,7 @@ public class ClockDisplay
     private NumberDisplay hours;
     private NumberDisplay minutes;
     private String displayString;    // simulates the actual display
+    public String displayAMPM;
     
     /**
      * Constructor for ClockDisplay objects. This constructor 
@@ -30,6 +31,7 @@ public class ClockDisplay
     {
         hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
+        displayAMPM.equals("AM");
         updateDisplay();
     }
 
@@ -38,11 +40,11 @@ public class ClockDisplay
      * creates a new clock set at the time specified by the 
      * parameters.
      */
-    public ClockDisplay(int hour, int minute)
+    public ClockDisplay(int hour, int minute, String displayAMPM)
     {
         hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
-        setTime(hour, minute);
+        setTime(hour, minute, displayAMPM);
     }
 
     /**
@@ -54,6 +56,17 @@ public class ClockDisplay
         minutes.increment();
         if(minutes.getValue() == 0) {  // it just rolled over!
             hours.increment();
+            if (hours.getValue() == 12)
+            {
+                if (displayAMPM.equals( "AM"))
+                {
+                    displayAMPM = "PM";
+                } 
+                else if (displayAMPM.equals( "PM"))
+                {
+                    displayAMPM = "AM";
+                }
+            }
         }
         updateDisplay();
     }
@@ -62,10 +75,11 @@ public class ClockDisplay
      * Set the time of the display to the specified hour and
      * minute.
      */
-    public void setTime(int hour, int minute)
+    public void setTime(int hour, int minute, String displayAMPM)
     {
         hours.setValue(hour);
         minutes.setValue(minute);
+        this.displayAMPM = displayAMPM;
         updateDisplay();
     }
 
@@ -88,6 +102,14 @@ public class ClockDisplay
     
     public void get12HourInternalDisplay()
     {
+        int hour = hours.getValue();
         
+        
+        if (hour == 0)
+        {
+            hour = 12;
+        }
+        displayString = hour + ":" + 
+                        minutes.getDisplayValue() + displayAMPM;
     }
 }
